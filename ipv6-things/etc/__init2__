@@ -7,4 +7,14 @@ ip addr add 192.0.0.8 dev eth0
 ip addr add 2602:806:a003:40e::1 dev eth0
 ip link set eth0 address 00:00:5e:00:53:43 up
 ip route add ::/0 via fe80::200:5eff:fe00:5342 dev eth0
+ip6tables-nft-restore <<\EOF
+*mangle
+:PREROUTING ACCEPT
+:TTGEN -
+-A PREROUTING -i eth0 -d 2602:806:a003:40f::/64 -j TTGEN
+-A TTGEN -p udp -j MARK --set-mark 10
+-A TTGEN -p ipv6-icmp \! --icmpv6-type 128 -j MARK --set-mark 10
+-A TTGEN -p tcp --dport 1024:65535 -j MARK --set-mark 10
+COMMIT
+EOF
 sysctl -w net.ipv6.conf.all.forwarding=1
