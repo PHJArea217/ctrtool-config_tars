@@ -1,8 +1,12 @@
 #!/bin/sh
 
 set -eu
-mkdir -p /run/sshd /run/syslog /var/log /var/spool/rsyslog
+ln -sT /_fsroot_ro/etc/services /etc/services
+ln -sT /_fsroot_ro/etc/protocols /etc/protocols
+mkdir -p /run/sshd /run/syslog /var/log /var/spool/rsyslog /var/spool/powerdns
 chown root:syslog /var/log
 chmod 775 /var/log
+chmod 700 /var/spool/powerdns
+chown pdns:pdns /var/spool/powerdns
 exec /ctr_fs1/_system/bin/ctrtool launcher -L/var/log/container.log -m -p --mount-proc \
 	/etc/__init2__

@@ -18,3 +18,7 @@ ip6tables-nft-restore <<\EOF
 COMMIT
 EOF
 sysctl -w net.ipv6.conf.all.forwarding=1
+exec /ctr_fs1/_system/bin/ctrtool mini-init2 \
+	-n /usr/sbin/pdns_server -r10 \
+	-n /etc/start-u-relay.sh -r10 \
+	-s15 -a2
