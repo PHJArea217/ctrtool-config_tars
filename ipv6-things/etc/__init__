@@ -1,0 +1,8 @@
+#!/bin/sh
+
+set -eu
+mkdir -p /run/sshd /run/syslog /var/log /var/spool/rsyslog
+chown root:syslog /var/log
+chmod 775 /var/log
+exec /ctr_fs1/_system/bin/ctrtool launcher -L/var/log/container.log -m -p --mount-proc \
+	/etc/__init2__

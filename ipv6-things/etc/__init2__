@@ -1,0 +1,10 @@
+#!/bin/sh
+
+set -eu
+ip link set lo up
+ip route add local 2602:806:a003:40e::/63 dev lo table main
+ip addr add 192.0.0.8 dev eth0
+ip addr add 2602:806:a003:40e::1 dev eth0
+ip link set eth0 address 00:00:5e:00:53:43 up
+ip route add ::/0 via fe80::200:5eff:fe00:5342 dev eth0
+sysctl -w net.ipv6.conf.all.forwarding=1
