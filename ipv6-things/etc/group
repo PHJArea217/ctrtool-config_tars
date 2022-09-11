@@ -7,3 +7,5 @@ postfix:x:124:
 dovecot:x:125:
 dovenull:x:126:
 fetchmail:x:127:
+u-relay:x:128:
+socketbox:x:129:
