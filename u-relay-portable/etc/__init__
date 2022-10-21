@@ -1,0 +1,20 @@
+#!/bin/sh
+
+set -eu
+cd /
+ln -sT /_fsroot_ro/etc/services /etc/services
+ln -sT /_fsroot_ro/etc/protocols /etc/protocols
+mkdir -p /_fsroot_rw/var /run/sshd /run/syslog /var/log /var/spool/rsyslog /var/spool/powerdns /run/socketbox
+/ctr_fs1/_system/bin/ctrtool mount_seq -m /run/socketbox -s /run/socketbox -Ob -F8 -r
+chown root:syslog /var/log
+chmod 775 /var/log
+chmod 700 /var/spool/powerdns
+chown pdns:pdns /var/spool/powerdns
+rsyslogd
+chown root:socketbox /run/socketbox
+chmod 2755 /run/socketbox
+cd /run/socketbox
+mkdir -m 2750 00001 00002 00003
+cd /
+exec /ctr_fs1/_system/bin/ctrtool launcher -L/var/log/container.log -m -p --mount-proc \
+	/etc/__init2__

@@ -1,0 +1,17 @@
+#!/bin/sh
+
+set -eu
+nsenter --net=/run/netns/__host__ sh -eu -c '
+ip link set lo up
+ip route add local "fedb:1200:4500:7800::/63" dev lo table main
+ip addr add 192.0.0.8 dev eth0
+ip addr add "fedb:1200:4500:7801::1" dev eth0
+ip link set eth0 address 00:00:5e:00:53:43 up
+ip route add ::/0 via fe80::200:5eff:fe00:5342 dev eth0
+ip6tables-nft -t mangle -A PREROUTING -i eth0 -d "fedb:1200:4500:7800::/64" -p tcp -j TPROXY --on-ip "::1" --on-port 82
+ip6tables-nft -t mangle -A PREROUTING -i eth0 -d "fedb:1200:4500:7801:1::/80" -p tcp -j TPROXY --on-ip "::1" --on-port 83
+'
+exec /ctr_fs1/_system/bin/ctrtool mini-init2 \
+	-n /usr/bin/env nsenter --net=/run/netns/__host__ /usr/sbin/pdns_server -r10 \
+	-n /etc/start-u-relay.sh -r10 \
+	-s15 -a2

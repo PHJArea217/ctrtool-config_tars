@@ -1,0 +1,11 @@
+root:x:0:
+pdns:x:120:
+syslog:x:121:
+dnsmasq:x:122:
+unbound:x:123:
+postfix:x:124:
+dovecot:x:125:
+dovenull:x:126:
+fetchmail:x:127:
+u-relay:x:128:
+socketbox:x:129:
