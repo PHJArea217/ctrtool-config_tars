@@ -12,6 +12,6 @@ ip6tables-nft -t mangle -A PREROUTING -i eth0 -d "fedb:1200:4500:7800::/64" -p t
 ip6tables-nft -t mangle -A PREROUTING -i eth0 -d "fedb:1200:4500:7801:1::/80" -p tcp -j TPROXY --on-ip "::1" --on-port 83
 '
 exec /ctr_fs1/_system/bin/ctrtool mini-init2 \
-	-n /usr/bin/env nsenter --net=/run/netns/__host__ /usr/sbin/pdns_server -r10 \
+	-n /usr/bin/env nsenter -c--net=/run/netns/__host__ /usr/sbin/pdns_server -r10 \
 	-n /etc/start-u-relay.sh -r10 \
 	-s15 -a2

@@ -2,9 +2,9 @@
 set -eu
 REPO_ROOT="/home/henrie/gitprojects"
 "$REPO_ROOT/ctrtool-containers/2layer/make-2layer.py" /dev/null "$1" "0.$2.200" "0.$2.200" "$2" "$2" flags netns_ambient snippets mix_mounts,extract_config_tar netns_veth_name to_urelay ctrtool "$REPO_ROOT/container-scripts/ctrtool/ctrtool"
-cp "$REPO_ROOT/ctrtool-config_tars/u-relay-portable/etc" "$1/config_dir"
+cp -r "$REPO_ROOT/ctrtool-config_tars/u-relay-portable/etc/." "$1/config_dir"
 mkdir -p "$1/config_dir/node_app"
-cp "$REPO_ROOT/universal-relay" "$1/config_dir/node_app/universal-relay"
+cp -r "$REPO_ROOT/universal-relay" "$1/config_dir/node_app/universal-relay"
 "$1/make_config_tar.sh"
 exit 0
 
