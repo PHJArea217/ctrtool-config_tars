@@ -16,4 +16,4 @@ nsenter --net=/run/netns/u-relay-main sh -eu -c '
 ip addr add "fedb:1200:4500:7802::1" dev "to_urelay"
 ip link set dev "to_urelay" address 00:00:5e:00:53:42 up
 ip route add "fedb:1200:4500:7800::/63" via inet6 fe80::200:5eff:fe00:5343 dev "to_urelay"
-'
+' _ _ "$2"
