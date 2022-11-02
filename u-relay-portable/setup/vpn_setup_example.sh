@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 REPO_ROOT="/home/henrie/gitprojects"
-"$REPO_ROOT/ctrtool-containers/misc/vrf-setup" vpnvrf0 10 # local_setup
+"$REPO_ROOT/ctrtool-containers/misc/vrf-setup" vpnvrf0 10 local_setup
 "$REPO_ROOT/ctrtool-containers/misc/vrf-setup" vpnvrf1 11
 "$REPO_ROOT/ctrtool-containers/misc/vrf-setup" vpnvrf2 12
 "$REPO_ROOT/ctrtool-containers/misc/vrf-setup" vpnvrf3 13
